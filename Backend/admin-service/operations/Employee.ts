@@ -11,7 +11,7 @@ export const employee =async (email:string,csvObjects:CsvData[]) =>{
     const processData = async (element: CsvData) => {
       try {
         //checking dept exists or not
-        const deptData = await siteCheck();
+        const deptData = await siteCheck(element);
 
         const isDeptPresent = deptData.hasOwnProperty(element.siteName);
 
@@ -24,7 +24,7 @@ export const employee =async (email:string,csvObjects:CsvData[]) =>{
           });
         }
         //checking site exists or not
-        const siteData = await siteCheck();
+        const siteData = await siteCheck(element);
 
         let isPresent = siteData.hasOwnProperty(element.siteName);
 

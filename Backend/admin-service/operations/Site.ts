@@ -1,15 +1,14 @@
-import { ISiteDocument } from './../../types/types';
+import { ISiteDocument, CsvData } from './../../types/types';
 import SiteModel from './../../schema/site-schema';
 import statusModel from "../../schema/job-schema";
-import { CsvData } from "../../types/types";
 
 
 export const site = async (email: string, csvObjects: CsvData[]) => {
-  const siteData = await siteCheck();
+  
 
   for (let csvObject of csvObjects) {
-    const isPresent = siteData.hasOwnProperty(csvObject.siteName);
 
+    const isPresent=await siteCheck(csvObject);
     if (!isPresent) {
       let data = new SiteModel(csvObject);
       await data.save();
@@ -17,14 +16,17 @@ export const site = async (email: string, csvObjects: CsvData[]) => {
     }
   }
 };
-
-export const siteCheck = async (): Promise<Record<string, ISiteDocument>> => {
+export const siteCheck = async ( csvObject:CsvData): Promise<boolean> => {
   const existingSites = await SiteModel.find({});
 
-  return existingSites.reduce((acc, site) => {
+  const siteData =existingSites.reduce((acc, site) => {
     if (site.siteName) {
       (acc as Record<string, ISiteDocument>)[site.siteName] = site;
     }
     return acc;
   }, {} as Record<string, ISiteDocument>);
+
+  const data=siteData.hasOwnProperty(csvObject.siteName);
+  return data;
 };
+
