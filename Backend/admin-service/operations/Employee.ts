@@ -47,6 +47,7 @@ export const employee =async (email:string,csvObjects:CsvData[]) =>{
     };
     
     for (const element of csvObjects) {
+      console.log(element)
       await processData(element);
     }
 }

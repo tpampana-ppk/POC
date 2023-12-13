@@ -1,3 +1,3 @@
-export interface CsvData {
+export type CsvData = {
     [key: string]: string;
-}
+};  

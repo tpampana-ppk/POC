@@ -1,13 +1,10 @@
-// Import necessary modules
 import mongoose, { Document, Schema } from 'mongoose';
 
-// Define the interface for the document
 export interface IDepartmentDocument extends Document {
   deptNo:string;
   deptName: string;
 }
 
-// Define the MongoDB schema
 const departmentSchema = new Schema<IDepartmentDocument>(
   {
     deptNo: {
@@ -22,8 +19,6 @@ const departmentSchema = new Schema<IDepartmentDocument>(
   },
 );
 
-// Create the Mongoose model
 const DepartmentModel = mongoose.model<IDepartmentDocument>('Department', departmentSchema);
 
-// Export the model
 export default DepartmentModel;

@@ -4,8 +4,8 @@ import mongoose, { Document, Schema, Model, model } from 'mongoose';
 interface IEmployee extends Document {
   empFirstName: string;
   empLastName: string;
-  departmentId: string; // Corrected type
-  siteId: string;       // Corrected type
+  departmentId: string; 
+  siteId: string;       
 }
 
 const employeeSchema: Schema<IEmployee> = new Schema({

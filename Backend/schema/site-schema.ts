@@ -1,4 +1,3 @@
-// schema/site-schema.ts
 import { Schema, model, Document } from 'mongoose';
 
 export interface ISiteDocument extends Document {
