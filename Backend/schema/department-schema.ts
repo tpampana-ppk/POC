@@ -1,9 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-
-export interface IDepartmentDocument extends Document {
-  deptNo:string;
-  deptName: string;
-}
+import { IDepartmentDocument } from '../types/types';
 
 const departmentSchema = new Schema<IDepartmentDocument>(
   {

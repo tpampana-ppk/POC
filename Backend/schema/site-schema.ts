@@ -1,9 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
+import { ISiteDocument } from '../types/types';
 
-export interface ISiteDocument extends Document {
-  siteNo: string;
-  siteName: string;
-}
 
 const siteSchema = new Schema<ISiteDocument>(
   {

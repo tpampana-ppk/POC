@@ -1,12 +1,6 @@
 import mongoose, { Document, Schema, Model, model } from 'mongoose';
+import { IEmployee } from '../types/types';
 
-
-interface IEmployee extends Document {
-  empFirstName: string;
-  empLastName: string;
-  departmentId: string; 
-  siteId: string;       
-}
 
 const employeeSchema: Schema<IEmployee> = new Schema({
   empFirstName: { type: String, required: true },

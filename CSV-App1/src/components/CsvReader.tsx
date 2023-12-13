@@ -41,7 +41,6 @@ const EmailAndFileForm= () => {
           const newArray = lines.slice(1).map((line) => {
             const values = line.trim().split(',');
     
-            // Create an object dynamically based on the header
             const obj: Record<string, string> = {};
             header.forEach((key, index) => {
               obj[key] = values[index];
