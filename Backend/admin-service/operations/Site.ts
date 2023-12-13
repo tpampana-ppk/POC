@@ -5,10 +5,8 @@ import statusModel from "../../schema/job-schema";
 import { CsvData } from "../../types/types";
 
 export const site = async (email: string, csvObjects: CsvData[]) => {
-  console.log(true);
 
   const existingDept = await SiteModel.find({});
-  console.log(existingDept)
   for (let csvObject of csvObjects) {
 
     function isNamePresent(array : ISiteDocument[], targetName:string) {

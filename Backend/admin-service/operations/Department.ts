@@ -4,13 +4,10 @@ import statusModel from "../../schema/job-schema";
 import { CsvData } from "../../types/types";
 
 export const department = async (email: string, csvObjects: CsvData[]) => {
-  console.log(true);
 
   const existingDept = await DepartmentModel.find({});
-  console.log(existingDept)
   for (let csvObject of csvObjects) {
-    console.log(csvObject)
-
+    
     function isNamePresent(array : IDepartmentDocument[], targetName:string) {
       return array.some(person => person.deptName === targetName);
     }
