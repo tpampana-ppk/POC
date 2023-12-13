@@ -10,13 +10,10 @@ export const postdata = async(email:string,selectedFileType:string,csvObjects:Cs
 
     switch (selectedFileType) {
       case 'site':
-        console.log('site')
         return await site(email, csvObjects);
       case 'department':
-        console.log('dep')
         return await department(email, csvObjects);
       case 'employee':
-        console.log('emp')
         return await employee(email, csvObjects);
       default:
         return 'Invalid type';
