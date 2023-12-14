@@ -3,12 +3,12 @@ import EmployeeModel from "../../schema/employee-schema";
 import statusModel from "../../schema/job-schema";
 import SiteModel from "../../schema/site-schema";
 import { Types } from "mongoose";
-import { CsvData } from "../../types/types";
+import { LineItem } from '../../types/application_types';
 import { siteCheck } from "./Site";
 
-export const employee =async (email:string,csvObjects:CsvData[]) =>{
+export const employee =async (email:string,csvObjects:LineItem[]) =>{
 
-    const processData = async (element: CsvData) => {
+    const processData = async (element: LineItem) => {
       try {
         //checking dept exists or not
         const deptData = await siteCheck(element);

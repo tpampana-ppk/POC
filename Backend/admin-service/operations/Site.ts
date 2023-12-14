@@ -1,9 +1,10 @@
-import { ISiteDocument, CsvData } from './../../types/types';
+import { ISiteDocument } from './../../types/types';
 import SiteModel from './../../schema/site-schema';
 import statusModel from "../../schema/job-schema";
+import { LineItem } from '../../types/application_types';
 
 
-export const site = async (email: string, csvObjects: CsvData[]) => {
+export const site = async (email: string, csvObjects: LineItem[]) => {
   
 
   for (let csvObject of csvObjects) {
@@ -16,7 +17,7 @@ export const site = async (email: string, csvObjects: CsvData[]) => {
     }
   }
 };
-export const siteCheck = async ( csvObject:CsvData): Promise<boolean> => {
+export const siteCheck = async ( csvObject:LineItem): Promise<boolean> => {
   const existingSites = await SiteModel.find({});
 
   const siteData =existingSites.reduce((acc, site) => {

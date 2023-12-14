@@ -1,28 +1,24 @@
-export type CsvData = {
-    [key: string]: string;
-};  
 
-export interface IDepartmentDocument extends Document {
+export type IDepartmentDocument = {
     deptNo:string;
     deptName: string;
   }
   
 
-export interface IEmployee extends Document {
+export type IEmployee =  {
     empFirstName: string;
     empLastName: string;
     departmentId: string; 
     siteId: string;       
 }
   
-
-export interface StatusDocument extends Document {
+export type StatusDocument  = {
     email: string;
     status: string;
     description:string;
   }
 
-export interface ISiteDocument extends Document {
+export type ISiteDocument  = {
     siteNo: string;
     siteName: string;
   }

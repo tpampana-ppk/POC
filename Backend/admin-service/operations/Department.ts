@@ -1,9 +1,10 @@
-import { CsvData, IDepartmentDocument } from './../../types/types';
+import { IDepartmentDocument } from './../../types/types';
+import { LineItem } from '../../types/application_types';
 import DepartmentModel from "../../schema/department-schema";
 import statusModel from "../../schema/job-schema";
 
 
-export const department = async (email: string, csvObjects: CsvData[]) => {
+export const department = async (email: string, csvObjects: LineItem[]) => {
   const deptData = await siteCheck();
 
   for (let csvObject of csvObjects) {

@@ -1,9 +1,9 @@
 import statusModel from "../schema/job-schema";
-import { CsvData } from "../types/types";
+import { LineItem } from "../types/application_types";
 import { employee } from "./operations/Employee";
 import { department } from "./operations/Department";
 import { site } from "./operations/Site";
-export const postdata = async(email:string,selectedFileType:string,csvObjects:CsvData[]) =>{
+export const postdata = async(email:string,selectedFileType:string,csvObjects:LineItem[]) =>{
 
     const data = new statusModel({ email });
     await data.save();
