@@ -11,3 +11,5 @@ export const postdata =async (email:string,selectedFileType:string,csvObjects:Cs
     });
       return response.data.message
 }
+
+

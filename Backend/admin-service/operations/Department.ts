@@ -35,3 +35,7 @@ export const deptCheck = async ( csvObject:LineItem): Promise<boolean> => {
   console.log(data);
   return data;
 };
+
+export const deptData =async(element:LineItem)=>{
+  return await DepartmentModel.findOne({deptName:element.deptName});
+}

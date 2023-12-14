@@ -33,3 +33,7 @@ export const siteCheck = async ( csvObject:LineItem): Promise<boolean> => {
   console.log(csvObject.siteName)
   return data;
 };
+
+export const siteData =async(element:LineItem)=>{
+  return await SiteModel.findOne({siteName:element.siteName});
+}

@@ -4,8 +4,8 @@ import statusModel from "../../schema/job-schema";
 import SiteModel from "../../schema/site-schema";
 import { Types } from "mongoose";
 import { LineItem } from '../../types/application_types';
-import { siteCheck } from "./Site";
-import { deptCheck } from "./Department";
+import { siteCheck, siteData } from "./Site";
+import { deptCheck, deptData } from "./Department";
 
 export const employee =async (email:string,csvObjects:LineItem[]) =>{
 
@@ -22,7 +22,7 @@ export const employee =async (email:string,csvObjects:LineItem[]) =>{
             deptNo: deptno.toString(),
             deptName: element.deptName,
           });
-          department = await DepartmentModel.findOne({deptName:element.deptName});
+          department = deptData(element); //department.ts
         }
         //checking site exists or not
         const sitePresent = await siteCheck(element);
@@ -35,7 +35,7 @@ export const employee =async (email:string,csvObjects:LineItem[]) =>{
             siteName: element.siteName,
           });
           
-          site = await SiteModel.findOne({siteName:element.siteName});
+          site = siteData(element) //site.ts
         }
     
         const employeeData = {
