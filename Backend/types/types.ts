@@ -6,6 +6,7 @@ export type IDepartmentDocument = {
   
 
 export type IEmployee =  {
+    empId:string;
     empFirstName: string;
     empLastName: string;
     departmentId: string; 

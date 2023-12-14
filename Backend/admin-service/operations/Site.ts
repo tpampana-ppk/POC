@@ -2,6 +2,7 @@ import { ISiteDocument } from './../../types/types';
 import SiteModel from './../../schema/site-schema';
 import statusModel from "../../schema/job-schema";
 import { LineItem } from '../../types/application_types';
+import { siteCheck } from '../Existing-Data/DataCheck';
 
 
 export const site = async (email: string, csvObjects: LineItem[]) => {
@@ -16,23 +17,10 @@ export const site = async (email: string, csvObjects: LineItem[]) => {
       await statusModel.updateOne({ email: email }, { $set: { description: 'sites added' } });
     }
   }
+  return "success";
 };
 
 
-export const siteCheck = async ( csvObject:LineItem): Promise<boolean> => {
-  const existingDepts = await SiteModel.find({});
-    
-  const deptData = existingDepts.reduce((acc, dept) => {
-    if (dept.siteName) {
-      (acc as Record<string, ISiteDocument>)[dept.siteName] = dept;
-    }
-    return acc;
-  }, {} as Record<string, ISiteDocument>);
-  
-  const data=deptData.hasOwnProperty(csvObject.siteName);
-  console.log(csvObject.siteName)
-  return data;
-};
 
 export const siteData =async(element:LineItem)=>{
   return await SiteModel.findOne({siteName:element.siteName});

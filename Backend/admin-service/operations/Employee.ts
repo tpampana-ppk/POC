@@ -4,8 +4,9 @@ import statusModel from "../../schema/job-schema";
 import SiteModel from "../../schema/site-schema";
 import { Types } from "mongoose";
 import { LineItem } from '../../types/application_types';
-import { siteCheck, siteData } from "./Site";
-import { deptCheck, deptData } from "./Department";
+import { siteData } from "./Site";
+import { deptData } from "./Department";
+import { deptCheck, empCheck, siteCheck } from "../Existing-Data/DataCheck";
 
 export const employee =async (email:string,csvObjects:LineItem[]) =>{
 
@@ -14,7 +15,7 @@ export const employee =async (email:string,csvObjects:LineItem[]) =>{
 
         const deptPresent = await deptCheck(element);
         
-        let department ;
+        let department=await deptData(element); ;
 
         if (!deptPresent) {
           const deptno = new Types.ObjectId();
@@ -22,12 +23,12 @@ export const employee =async (email:string,csvObjects:LineItem[]) =>{
             deptNo: deptno.toString(),
             deptName: element.deptName,
           });
-          department = deptData(element); //department.ts
+          department =await deptData(element); //department.ts
         }
         //checking site exists or not
         const sitePresent = await siteCheck(element);
 
-        let site;
+        let site =await siteData(element);
         if (!sitePresent) {
           const siteno = new Types.ObjectId();
             await SiteModel.create({
@@ -35,21 +36,29 @@ export const employee =async (email:string,csvObjects:LineItem[]) =>{
             siteName: element.siteName,
           });
           
-          site = siteData(element) //site.ts
+          site =await siteData(element) //site.ts
+        }
+
+        const empPresent = await empCheck(element);
+
+        if (!empPresent) {
+          const employeeData = {
+            empId:element.empId,
+            empFirstName: element.empFirstName,
+            empLastName: element.empLastName,
+            departmentId: department!.deptNo,
+            siteId: site!.siteNo,
+          };
+            
+          const newEmployee = new EmployeeModel(employeeData);
+          await newEmployee.save();
         }
     
-        const employeeData = {
-          empFirstName: element.empFirstName,
-          empLastName: element.empLastName,
-          departmentId: department!.deptNo,
-          siteId: site!.siteNo,
-        };
-          
-        const newEmployee = new EmployeeModel(employeeData);
-        await newEmployee.save();
         await statusModel.updateOne({ email: email }, { $set: { status: 'success', description: 'employees added' } });
+        return "success";
       } catch (error) {
         console.error('Error processing employee data:', error);
+        return error;
       }
     };
     

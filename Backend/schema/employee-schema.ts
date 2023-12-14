@@ -3,6 +3,7 @@ import { IEmployee } from '../types/types';
 
 
 const employeeSchema: Schema<IEmployee> = new Schema({
+  empId: { type: String, required: true },
   empFirstName: { type: String, required: true },
   empLastName: { type: String, required: true },
   departmentId: { type: String, ref: 'Department', required: true },
