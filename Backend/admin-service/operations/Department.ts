@@ -5,9 +5,11 @@ import statusModel from "../../schema/job-schema";
 
 
 export const department = async (email: string, csvObjects: LineItem[]) => {
-  const deptData = await siteCheck();
 
   for (let csvObject of csvObjects) {
+
+    const deptData = await deptCheck(csvObject);
+
     const isPresent = deptData.hasOwnProperty(csvObject.siteName);
 
     if (!isPresent) {
@@ -18,13 +20,18 @@ export const department = async (email: string, csvObjects: LineItem[]) => {
   }
 };
 
-export const siteCheck = async (): Promise<Record<string, IDepartmentDocument>> => {
-  const existingSites = await DepartmentModel.find({});
-
-  return existingSites.reduce((acc, site) => {
-    if (site.deptName) {
-      (acc as Record<string, IDepartmentDocument>)[site.deptName] = site;
+export const deptCheck = async ( csvObject:LineItem): Promise<boolean> => {
+  const existingDepts = await DepartmentModel.find({});
+    
+  const deptData = existingDepts.reduce((acc, dept) => {
+    if (dept.deptName) {
+      (acc as Record<string, IDepartmentDocument>)[dept.deptName] = dept;
     }
     return acc;
   }, {} as Record<string, IDepartmentDocument>);
+  
+  const data=deptData.hasOwnProperty(csvObject.deptName);
+  console.log(csvObject.deptName)
+  console.log(data);
+  return data;
 };

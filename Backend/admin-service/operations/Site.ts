@@ -17,17 +17,19 @@ export const site = async (email: string, csvObjects: LineItem[]) => {
     }
   }
 };
-export const siteCheck = async ( csvObject:LineItem): Promise<boolean> => {
-  const existingSites = await SiteModel.find({});
 
-  const siteData =existingSites.reduce((acc, site) => {
-    if (site.siteName) {
-      (acc as Record<string, ISiteDocument>)[site.siteName] = site;
+
+export const siteCheck = async ( csvObject:LineItem): Promise<boolean> => {
+  const existingDepts = await SiteModel.find({});
+    
+  const deptData = existingDepts.reduce((acc, dept) => {
+    if (dept.siteName) {
+      (acc as Record<string, ISiteDocument>)[dept.siteName] = dept;
     }
     return acc;
   }, {} as Record<string, ISiteDocument>);
-
-  const data=siteData.hasOwnProperty(csvObject.siteName);
+  
+  const data=deptData.hasOwnProperty(csvObject.siteName);
+  console.log(csvObject.siteName)
   return data;
 };
-

@@ -5,36 +5,37 @@ import SiteModel from "../../schema/site-schema";
 import { Types } from "mongoose";
 import { LineItem } from '../../types/application_types';
 import { siteCheck } from "./Site";
+import { deptCheck } from "./Department";
 
 export const employee =async (email:string,csvObjects:LineItem[]) =>{
 
     const processData = async (element: LineItem) => {
       try {
-        //checking dept exists or not
-        const deptData = await siteCheck(element);
 
-        const isDeptPresent = deptData.hasOwnProperty(element.siteName);
+        const deptPresent = await deptCheck(element);
+        
+        let department ;
 
-        let department;
-        if (!isDeptPresent) {
+        if (!deptPresent) {
           const deptno = new Types.ObjectId();
-          department = await DepartmentModel.create({
+          await DepartmentModel.create({
             deptNo: deptno.toString(),
             deptName: element.deptName,
           });
+          department = await DepartmentModel.findOne({deptName:element.deptName});
         }
         //checking site exists or not
-        const siteData = await siteCheck(element);
-
-        let isPresent = siteData.hasOwnProperty(element.siteName);
+        const sitePresent = await siteCheck(element);
 
         let site;
-        if (!isPresent) {
+        if (!sitePresent) {
           const siteno = new Types.ObjectId();
-            site=await SiteModel.create({
+            await SiteModel.create({
             siteNo: siteno.toString(),
             siteName: element.siteName,
           });
+          
+          site = await SiteModel.findOne({siteName:element.siteName});
         }
     
         const employeeData = {
